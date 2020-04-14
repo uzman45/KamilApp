@@ -1,0 +1,69 @@
+
+<div class="content" fxLayout="row" fxLayout.xs="column">
+
+  <div fxFlex="33" class="sec1" fxFlex.xs="33">
+    <app-results [data]="kamilDataOverall" [title]="'Tüm Zamanların Sıralaması'"></app-results>
+  </div>
+  <div fxFlex="33" class="sec2">
+    <app-results [data]="kamilDataMonth" [title]="'Son Ayın sıralaması'"></app-results>
+  </div>
+  <div fxFlex="33" class="sec3" fxFlex.xs="33">
+    <app-results [data]="kamilDataToday" [title]="'Bugünün Sıralaması'"></app-results>
+  </div>
+
+</div>
+<div *ngIf="isVoted" class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px"
+  fxLayoutGap.xs="0">
+  <div class="item item-1" fxFlex="100%">Bugünkü kamillik görevini yerine getirdin artık yarın oy...</div>
+</div>
+<div *ngIf="!isVoted" class="container" fxLayout fxLayout.xs="column" fxLayoutAlign="center" fxLayoutGap="10px"
+  fxLayoutGap.xs="0">
+  <div class="item item-1" fxFlex="40%">
+    <div class="todo-container column-container">
+      <div class="list" cdkDropList #todoList="cdkDropList" [cdkDropListData]="todos"
+        [cdkDropListConnectedTo]="[doneList]" (cdkDropListDropped)="drop($event)">
+        <h2>Potansiyel Kamiller</h2>
+        <mat-card *ngFor="let kamil of todos" cdkDrag>
+          <mat-card-header>
+            <mat-card-title>{{kamil.name}}</mat-card-title>
+            <mat-card-subtitle>{{kamil.nickname}}</mat-card-subtitle>
+
+          </mat-card-header>
+          <!--  -->
+          <mat-card-content>
+            <div class="imgContainer">
+              <img src='assets/{{kamil.imgPath}}' width="100" height="100" alt="Photo of a Shiba Inu">
+            </div>
+
+            <p class="desc">
+              {{kamil.desc}}
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+  <div class="item item-2" fxFlex="40%">
+    <div class="list-container">
+      <div class="done-container column-container">
+        <div class="list" cdkDropList #doneList="cdkDropList" [cdkDropListData]="completed"
+          [cdkDropListConnectedTo]="todoList" (cdkDropListDropped)="drop($event)">
+          <h2>Bugünkü oyların (küçükten büyüğe göre)</h2>
+          <mat-card *ngFor="let kamilVote of completed" cdkDrag>
+            <mat-card-header>
+              <mat-card-title>{{kamilVote.name}}</mat-card-title>
+              <mat-card-subtitle>{{kamilVote.nickname}}</mat-card-subtitle>
+              <div class="imgContainer">
+                <img src='assets/{{kamilVote.imgPath}}' width="100" height="100" alt="Photo of a Shiba Inu">
+              </div>
+            </mat-card-header>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="item item-3" fxFlex>
+    <button [disabled]="completed.length != 4" (click)="sendVotes(completed)" mat-flat-button
+      color="primary">Gönder</button>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+<mat-card>
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <h2>Kamil portaline giriş yap</h2>
+        <mat-error *ngIf="loginInvalid">
+          Kamilcim bilgilerini gir pls :D
+        </mat-error>
+        <mat-form-field class="full-width-input">
+          <input matInput placeholder="Kamil Adı" formControlName="username" required>
+          <mat-error>
+           Kamilcim lütfen adını gir.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width-input">
+          <input matInput type="password" placeholder="Kamil Şifresi" formControlName="password" required>
+          <mat-error>
+           Kamilcim lütfen şifren :D
+          </mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="primary">Kamil Logini</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
